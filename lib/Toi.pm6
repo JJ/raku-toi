@@ -1,7 +1,7 @@
-unit class Toi;
+use Toi::Role;
+use Toi::Data;
 
-has @.check-ins;
+unit class Toi does Toi::Role;
 
-method check-in( Str $nick, UInt $x, UInt $y) {…}
-method get-check-ins( $day ) {…}
-method get-days() {…}
+has Toi::Data $.data;
+
