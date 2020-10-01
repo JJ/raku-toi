@@ -8,7 +8,11 @@
   "license" : "Artistic-2.0",
   "name" : "",
   "perl" : "6.d",
-  "provides" : { },
+  "provides" : {
+    "X::Toi" : "lib/X/Toi.pm6",
+    "Toi::Data" : "lib/Toi/Data.pm6",
+    "Toi::Data::YAML" : "lib/Toi/Data/YAML.pm6"
+  },
   "resources" : [ ],
   "source-url" : "",
   "tags" : [
