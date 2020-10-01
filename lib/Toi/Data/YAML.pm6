@@ -15,4 +15,11 @@ method load() {
     }
 }
 
-method add(Date $date, Str $nick, UInt $x, UInt $y) {}
+method add(Date $date, Str $nick, UInt $x, UInt $y) {
+    my $data;
+    if $!file-name.IO.e {
+        $data = load-yaml($!file-name.IO.slurp);
+    }
+    $data.push: { :date($date.Str), :$nick, :$x, :$y };
+    $!file-name.IO.spurt( save-yaml( $data ));
+}
