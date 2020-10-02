@@ -16,7 +16,7 @@
     "Toi::Data::YAML" : "lib/Toi/Data/YAML.pm6"
   },
   "resources" : [ ],
-  "source-url" : "",
+  "source-url" : "git@github.com:JJ/raku-toi.git",
   "tags" : [
     "modules"
   ],
