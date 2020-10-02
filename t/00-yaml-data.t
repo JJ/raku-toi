@@ -17,5 +17,10 @@ my %data = $data-in-yaml.load;
 ok( %data, "There's some data");
 is( %data.keys.elems, 1, "There's only one");
 is( %data{$date.Str}<nick><x>, 3, "Roundtrips well");
+
+$data-in-yaml.add( $date, "nick", 4, 4);
+%data = $data-in-yaml.load;
+is( %data{$date.Str}<nick><x>, 4, "Uses latest check-in");
+
 $temp-file.unlink;
 done-testing;
