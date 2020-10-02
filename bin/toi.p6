@@ -1,10 +1,12 @@
 #!/usr/bin/env raku
 
+# Example telegram bot that uses the module for checking in
+
 use Telegram; # remember to zef install Telegram
 use Toi;
 use Toi::Data::YAML;
 
-
+my $file-name = @*ARGS[0] // "toi.yaml";
 my $bot = Telegram::Bot.new(%*ENV<TOI_BOT_TOKEN>);
 my $data = Toi::Data::YAML.new;
 my $toi = Toi.new: :$data;
