@@ -1,12 +1,12 @@
 {
-  "auth" : "",
-  "authors" : [],
+  "auth" : "github:JJ",
+  "authors" : ["JJ Merelo"],
   "depends" : [
     "YAMLish"
   ],
   "description" : "",
   "license" : "Artistic-2.0",
-  "name" : "",
+  "name" : "Toi",
   "perl" : "6.d",
   "provides" : {
     "Toi" : "lib/Toi.pm6",
@@ -16,7 +16,7 @@
     "Toi::Data::YAML" : "lib/Toi/Data/YAML.pm6"
   },
   "resources" : [ ],
-  "source-url" : "https://github.com/JJ/raku-toi.git",
+  "source-url" : "git@github.com:JJ/raku-toi.git",
   "tags" : [
     "modules"
   ],
