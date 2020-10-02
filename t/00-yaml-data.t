@@ -10,11 +10,12 @@ my $data-in-yaml = Toi::Data::YAML.new( :file-name($temp-file-name) );
 throws-like { $data-in-yaml.load }, X::Toi::NoFile,
         "Correctly throws if no file is present";
 
-$data-in-yaml.add( now.Date, "nick", 3, 3);
-my $data = $data-in-yaml.load;
+my $date = now.Date;
+$data-in-yaml.add( $date, "nick", 3, 3);
+my %data = $data-in-yaml.load;
 
-ok( $data, "There's some data");
-is( $data.elems, 1, "There's only one");
-is( $data[0]<x>, 3, "Roundtrips well");
+ok( %data, "There's some data");
+is( %data.keys.elems, 1, "There's only one");
+is( %data{$date.Str}<nick><x>, 3, "Roundtrips well");
 $temp-file.unlink;
 done-testing;

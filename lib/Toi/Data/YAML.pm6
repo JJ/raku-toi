@@ -7,7 +7,7 @@ unit class Toi::Data::YAML does Toi::Data;
 
 has $.file-name = "toi.yaml";
 
-method load() {
+method load( --> Associative ) {
     if $!file-name.IO.e {
         return load-yaml($!file-name.IO.slurp);
     } else {
@@ -16,10 +16,11 @@ method load() {
 }
 
 method add(Date $date, Str $nick, UInt $x, UInt $y) {
-    my $data;
+    my %data;
     if $!file-name.IO.e {
-        $data = load-yaml($!file-name.IO.slurp);
+        %data = load-yaml($!file-name.IO.slurp);
     }
-    $data.push: { :date($date.Str), :$nick, :$x, :$y };
-    $!file-name.IO.spurt( save-yaml( $data ));
+    my $date-key = $date.Str;
+    %data{$date-key}<nick> = { :$x, :$y };
+    $!file-name.IO.spurt( save-yaml( %data ));
 }
