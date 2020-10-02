@@ -21,6 +21,6 @@ method add(Date $date, Str $nick, UInt $x, UInt $y) {
         %data = load-yaml($!file-name.IO.slurp);
     }
     my $date-key = $date.Str;
-    %data{$date-key}<nick> = { :$x, :$y };
+    %data{$date-key}{$nick} = { :$x, :$y };
     $!file-name.IO.spurt( save-yaml( %data ));
 }
