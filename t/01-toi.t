@@ -9,13 +9,14 @@ my $data = Toi::Data::YAML.new( :file-name($temp-file-name) );
 
 my $toi = Toi.new: :$data;
 
+sleep 61 if DateTime.now.minute == 59;
 $toi.check-in( "nick", 3, 3);
 
 my $today = now.Date;
 my @dates = $toi.get-days();
 ok( @dates, "A non-null amount of dates");
 is( @dates.elems, 1, "There's only one");
-is( @dates[0], $today.Str, "Date is today"); # Don't test by midnight
+is( @dates[0], $today.Str, "Date is today");
 
 my %today-check-ins = $toi.get-check-ins( $today );
 ok(%today-check-ins, "We have a check-in hash for today");
