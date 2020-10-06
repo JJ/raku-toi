@@ -5,6 +5,7 @@
 use Telegram; # remember to zef install Telegram
 use Toi;
 use Toi::Data::YAML;
+use Array::Shaped::Console;
 
 sub MAIN( $file-name = "toi.yaml",
           UInt $x = 12, UInt $y = 12) {
@@ -14,10 +15,12 @@ sub MAIN( $file-name = "toi.yaml",
     my $data = Toi::Data::YAML.new;
     my $toi = Toi.new: :$data;
 
-$bot.start(1);
+    $bot.start(1);
 
 react {
     whenever $bot.messagesTap -> $msg {
+        my @map[$x-1,$y-1] = (-1 xx $y-1 ) xx $x-1;
+        say @map;
         $msg.text ~~ /\/$<command> = (\w+) \h* $<args> = (.*)/;
         say "$msg $<command>";
         given $<command> {
@@ -30,8 +33,10 @@ react {
                             "x $x-pos o y $y-pos fuera de rango; la clase es $x x $y " );
                 } else {
                     $toi.check-in($msg.sender.username, |@args);
-                    $bot.sendMessage($msg.chat.id, "Registrado $<args> para @"
-                            ~ $msg.sender.username);
+                    @map[$x-pos -1; $y-pos-1 ] = 1;
+                    my $map = printed(@map, <# @>);
+                    $bot.sendMessage($msg.chat.id, "$map para @"
+                            ~ $msg.sender.username) ;
                 }
             }
             when "about" {
