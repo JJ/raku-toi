@@ -6,10 +6,13 @@ use Telegram; # remember to zef install Telegram
 use Toi;
 use Toi::Data::YAML;
 
-my $file-name = @*ARGS[0] // "toi.yaml";
-my $bot = Telegram::Bot.new(%*ENV<TOI_BOT_TOKEN>);
-my $data = Toi::Data::YAML.new;
-my $toi = Toi.new: :$data;
+sub MAIN( $file-name = "toi.yaml",
+          UInt $x = 12, UInt $y = 12) {
+
+    say "Usando $file-name para almacenar check-ins";
+    my $bot = Telegram::Bot.new(%*ENV<TOI_BOT_TOKEN>);
+    my $data = Toi::Data::YAML.new;
+    my $toi = Toi.new: :$data;
 
 $bot.start(1);
 
@@ -20,9 +23,16 @@ react {
         given $<command> {
             when "toi" {
                 my @args = $<args>.words.map: +*;
-                $toi.check-in($msg.sender.username, |@args);
-                $bot.sendMessage( $msg.chat.id, "Registrado $<args> para "
-                                    ~ $msg.sender.username );
+                my $x-pos = @args[0];
+                my $y-pos = @args[1];
+                if $x-pos > $x || $y-pos > $y {
+                    $bot.sendMessage( $msg.chat.id,
+                            "x $x-pos o y $y-pos fuera de rango; la clase es $x x $y " );
+                } else {
+                    $toi.check-in($msg.sender.username, |@args);
+                    $bot.sendMessage($msg.chat.id, "Registrado $<args> para @"
+                            ~ $msg.sender.username);
+                }
             }
             when "about" {
                 $bot.sendMessage($msg.chat.id, q:to/EOM/);
@@ -36,4 +46,5 @@ EOM
         $bot.stop;
         exit;
     }
+}
 }
