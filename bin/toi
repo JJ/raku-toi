@@ -18,9 +18,9 @@ sub MAIN( $file-name = "toi.yaml",
     my @map-fill[$y,$x] = (-1 xx $x ) xx $y;
     $bot.start(1);
 
-react {
-    whenever $bot.messagesTap -> $msg {
-        my @map[$y,$x] = @map-fill;
+    my @map[$y,$x] = @map-fill;
+    react {
+        whenever $bot.messagesTap -> $msg {
         $msg.text ~~ /\/$<command> = (\w+) \h* $<args> = (.*)/;
         say $msg.raku, " → ",  $<command>;
         given $<command> {
@@ -37,6 +37,7 @@ react {
                     my $map = printed(@map);
                     $bot.sendMessage($msg.chat.id,
                             "\@{$msg.sender.username} está en\n$map" ) ;
+                    @map[$y - $y-pos; $x-pos-1 ] = 0;
                 }
             }
             when "about" {
