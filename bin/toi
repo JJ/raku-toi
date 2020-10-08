@@ -22,7 +22,7 @@ react {
         my @map[$x,$y] = (-1 xx $y ) xx $x;
         say @map;
         $msg.text ~~ /\/$<command> = (\w+) \h* $<args> = (.*)/;
-        say "$msg $<command>";
+        say $msg.raku, " → ",  $<command>;
         given $<command> {
             when "toi" {
                 my @args = $<args>.words.map: +*;
