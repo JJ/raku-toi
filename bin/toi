@@ -37,7 +37,7 @@ react {
                             "x $x-pos o y $y-pos fuera de rango; la clase es $x x $y " );
                 } else {
                     $toi.check-in($msg.sender.username, |@args);
-                    @map[$x-pos -1; $y-pos-1 ] = 1;
+                    @map[$y-pos -1; $x-pos-1 ] = 1;
                     my $map = printed(@map, <# @>);
                     $bot.sendMessage($msg.chat.id, "$map para @"
                             ~ $msg.sender.username) ;
