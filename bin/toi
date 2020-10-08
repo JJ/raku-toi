@@ -28,9 +28,9 @@ react {
                 my @args = $<args>.words.map: +*;
                 my $x-pos = @args[0];
                 my $y-pos = @args[1];
-                if $x-pos > $x || $y-pos > $y {
+                if $x-pos > $x || $y-pos > $y || $x-pos < 1 || $y-pos < 1 {
                     $bot.sendMessage( $msg.chat.id,
-                            "x $x-pos o y $y-pos fuera de rango; la clase es $x x $y " );
+                            "❌ x → $x-pos o y → $y-pos fuera de rango; la clase es $x x $y " );
                 } else {
                     $toi.check-in($msg.sender.username, |@args);
                     @map[$y - $y-pos; $x-pos-1 ] = 1;
