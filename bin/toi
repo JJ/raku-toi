@@ -16,7 +16,6 @@ sub MAIN( $file-name = "toi.yaml",
     my $data = Toi::Data::YAML.new;
     my $toi = Toi.new: :$data;
     my @map-fill[$y,$x] = (-1 xx $x ) xx $y;
-    say @map-fill;
     $bot.start(1);
 
 react {
@@ -27,7 +26,6 @@ react {
         given $<command> {
             when "toi" {
                 my @args = $<args>.words.map: +*;
-                say "Args, @args";
                 my $x-pos = @args[0];
                 my $y-pos = @args[1];
                 if $x-pos > $x || $y-pos > $y {
@@ -35,10 +33,10 @@ react {
                             "x $x-pos o y $y-pos fuera de rango; la clase es $x x $y " );
                 } else {
                     $toi.check-in($msg.sender.username, |@args);
-                    @map[$y-pos -1; $x-pos-1 ] = 1;
-                    my $map = printed(@map, <# @>);
-                    $bot.sendMessage($msg.chat.id, "$map para @"
-                            ~ $msg.sender.username) ;
+                    @map[$y - $y-pos; $x-pos-1 ] = 1;
+                    my $map = printed(@map);
+                    $bot.sendMessage($msg.chat.id,
+                            "\@{$msg.sender.username} está en\n$map" ) ;
                 }
             }
             when "about" {
