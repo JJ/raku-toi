@@ -11,6 +11,7 @@ sub MAIN( $file-name = "toi.yaml",
           UInt $x = 12, UInt $y = 12) {
 
     say "Usando $file-name para almacenar check-ins";
+    die "No token" unless %*ENV<TOI_BOT_TOKEN>;
     my $bot = Telegram::Bot.new(%*ENV<TOI_BOT_TOKEN>);
     my $data = Toi::Data::YAML.new;
     my $toi = Toi.new: :$data;
@@ -25,6 +26,7 @@ react {
         given $<command> {
             when "toi" {
                 my @args = $<args>.words.map: +*;
+                say "Args, @args";
                 my $x-pos = @args[0];
                 my $y-pos = @args[1];
                 if $x-pos > $x || $y-pos > $y {
