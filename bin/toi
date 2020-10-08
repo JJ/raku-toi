@@ -19,8 +19,7 @@ sub MAIN( $file-name = "toi.yaml",
 
 react {
     whenever $bot.messagesTap -> $msg {
-        my @map[$x,$y] = (-1 xx $y ) xx $x;
-        say @map;
+        my @map[$x,$y] = (-1 xx $x ) xx $y;
         $msg.text ~~ /\/$<command> = (\w+) \h* $<args> = (.*)/;
         say $msg.raku, " → ",  $<command>;
         given $<command> {
