@@ -15,13 +15,13 @@ sub MAIN( $file-name = "toi.yaml",
     my $bot = Telegram::Bot.new(%*ENV<TOI_BOT_TOKEN>);
     my $data = Toi::Data::YAML.new;
     my $toi = Toi.new: :$data;
-
+    my @map-fill[$y,$x] = (-1 xx $x ) xx $y;
+    say @map-fill;
     $bot.start(1);
 
 react {
     whenever $bot.messagesTap -> $msg {
-        say $msg.raku;
-        my @map[$x,$y] = (-1 xx $x ) xx $y;
+        my @map[$y,$x] = @map-fill;
         $msg.text ~~ /\/$<command> = (\w+) \h* $<args> = (.*)/;
         say $msg.raku, " → ",  $<command>;
         given $<command> {
@@ -35,7 +35,7 @@ react {
                             "x $x-pos o y $y-pos fuera de rango; la clase es $x x $y " );
                 } else {
                     $toi.check-in($msg.sender.username, |@args);
-                    @map[$x-pos -1; $y-pos-1 ] = 1;
+                    @map[$y-pos -1; $x-pos-1 ] = 1;
                     my $map = printed(@map, <# @>);
                     $bot.sendMessage($msg.chat.id, "$map para @"
                             ~ $msg.sender.username) ;
