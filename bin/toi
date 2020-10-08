@@ -15,12 +15,15 @@ sub MAIN( $file-name = "toi.yaml",
     my $bot = Telegram::Bot.new(%*ENV<TOI_BOT_TOKEN>);
     my $data = Toi::Data::YAML.new;
     my $toi = Toi.new: :$data;
-
+    my @map-fill[$y,$x] = (-1 xx $x ) xx $y;
+    say @map-fill;
     $bot.start(1);
 
 react {
     whenever $bot.messagesTap -> $msg {
-        my @map[$x,$y] = (-1 xx $x ) xx $y;
+    	say "$x, $y";
+	say $msg.raku;
+        my @map[$y,$x] = @map-fill;
         $msg.text ~~ /\/$<command> = (\w+) \h* $<args> = (.*)/;
         say $msg.raku, " → ",  $<command>;
         given $<command> {
