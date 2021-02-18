@@ -15,12 +15,20 @@ method load( --> Associative ) {
     }
 }
 
-method add(Date $date, Str $nick, UInt $x, UInt $y) {
-    my %data;
+multi method add(Date $date, Str $nick, UInt $x, UInt $y) {
+    self!add-anything(  $date, $nick,{:$x, :$y} );
+}
+
+multi method add(Date $date, Str $nick, Str $payload ) {
+    self!add-anything(  $date,  $nick, $payload );
+}
+
+method !add-anything( Date $date, Str $nick, $payload ) {
+     my %data;
     if $!file-name.IO.e {
         %data = load-yaml($!file-name.IO.slurp);
     }
     my $date-key = $date.Str;
-    %data{$date-key}{$nick} = { :$x, :$y };
+    %data{$date-key}{$nick} = $payload;
     $!file-name.IO.spurt( save-yaml( %data ));
 }

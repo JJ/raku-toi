@@ -5,7 +5,13 @@ unit class Toi does Toi::Role;
 
 has Toi::Data $.data;
 
-method check-in( Str $nick, UInt $x, UInt $y) {
+proto check-in( Str $nick, | ) {*}
+
+multi method check-in( Str $nick, Str $name ) {
+    $!data.add( now.Date, $nick, $name )
+}
+
+multi method check-in( Str $nick, UInt $x, UInt $y) {
     $!data.add( now.Date, $nick, $x, $y)
 }
 
