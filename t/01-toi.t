@@ -30,6 +30,14 @@ is( @dates.elems, 1, "Still only one");
 is(%today-check-ins.keys.elems, 2, "Two nicks have checked in");
 is(%today-check-ins<nock><x>, 4, "Position x correct for check-in");
 is(%today-check-ins<nock><y>, 4, "Position y correct for check-in");
+
+
+$toi.check-in( "Þor", "Mjolnir" );
+%today-check-ins = $toi.get-check-ins( $today );
+is(%today-check-ins.keys.elems, 3, "Three nicks have checked in");
+is(%today-check-ins<Þor>, "Mjolnir", "Nick chedked in");
+
 $temp-file.unlink;
+
 
 done-testing;
