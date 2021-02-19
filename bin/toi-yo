@@ -27,7 +27,7 @@ sub MAIN( $file-name = "toi.yaml" ) {
                 }
                 when "about" {
                     $bot.sendMessage($msg.chat.id, q:to/EOM/);
-Para registrarte, usa /toi Nombre
+Para registrarte, usa simplemente /toi
 EOM
                 }
             }
