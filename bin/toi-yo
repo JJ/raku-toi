@@ -20,7 +20,7 @@ sub MAIN( $file-name = "toi.yaml" ) {
             say $msg.raku, " → ",  $<command>;
             given $<command> {
                 when "toi" {
-                    my $nombre = $<args>.words.join(" ");
+                    my $nombre = $msg.sender.firstname ~ " " ~ $msg.sender.lastname;
                     $toi.check-in($msg.sender.username, $nombre );
                     $bot.sendMessage($msg.chat.id,
                                      "✓ \@{$msg.sender.username} asiste como «$nombre»" ) ;
