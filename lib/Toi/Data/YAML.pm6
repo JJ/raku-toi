@@ -24,11 +24,12 @@ multi method add(Date $date, Str $nick, Str $payload ) {
 }
 
 method !add-anything( Date $date, Str $nick, $payload ) {
-     my %data;
+    my %data;
     if $!file-name.IO.e {
         %data = load-yaml($!file-name.IO.slurp);
     }
     my $date-key = $date.Str;
+    $nick = $nick ?? $nick !! $payload;
     %data{$date-key}{$nick} = $payload;
     $!file-name.IO.spurt( save-yaml( %data ));
 }
