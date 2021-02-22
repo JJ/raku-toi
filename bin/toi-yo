@@ -16,7 +16,7 @@ sub MAIN( $file-prefix = "agil" ) {
     $bot.start(1);
     react {
         whenever $bot.messagesTap -> $msg {
-            $msg.text ~~ /\/$<command> = (\w+) \h* $<args> = (.*)/;
+            $msg.text ~~ /^^\/$<command> = (\w+) \h* $<args> = (.*)/;
             say $msg.raku, " → ",  $<command>;
             given $<command> {
                 when "toi" {
