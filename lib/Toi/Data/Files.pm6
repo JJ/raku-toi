@@ -3,7 +3,9 @@ use X::Toi;
 
 unit class Toi::Data::Files does Toi::Data;
 
-has $.prefix = "toi";
+has Str $.prefix = "toi";
+
+submethod BUILD( :$prefix ) {}
 
 method load( --> Associative ) {
     return;
