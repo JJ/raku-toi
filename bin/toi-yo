@@ -6,9 +6,9 @@ use Telegram; # remember to zef install Telegram
 use Toi;
 use Toi::Data::Files;
 
-sub MAIN( $file-name = "toi.yaml" ) {
+sub MAIN( $file-prefix = "agil" ) {
 
-    say "Usando $file-name para almacenar check-ins";
+    say "Ficheros con prefijo $file-prefix para almacenar check-ins";
     die "No token" unless %*ENV<TOI_BOT_TOKEN>;
     my $bot = Telegram::Bot.new(%*ENV<TOI_BOT_TOKEN>);
     my $data = Toi::Data::Files.new;
